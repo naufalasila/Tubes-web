@@ -73,7 +73,7 @@ export default function HomePage() {
               <div className="bg-white p-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 rounded-lg shadow text-center md:w-[350px] md:h-[320px] h-[320px] ">
                 <div className="flex justify-center mb-4 mt-[-70px]">
                   <Image
-                    src="/backend.png"
+                    src="/backend.webp"
                     alt="Backend"
                     width={112}
                     height={112}
@@ -105,7 +105,7 @@ export default function HomePage() {
               <div className="bg-white p-6 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 rounded-lg shadow text-center md:w-[350px] md:h-[320px] h-[320px] ">
                 <div className="flex justify-center mb-4 mt-[-70px]">
                   <Image
-                    src="/frontend.png"
+                    src="/frontend.webp"
                     alt="Frontend"
                     width={112}
                     height={112}
