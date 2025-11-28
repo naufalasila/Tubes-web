@@ -14,24 +14,24 @@ export default function HomePage() {
 
       <main className="relative overflow-hidden">
        {/* Hero Section */}
-        <section className="relative py-24 text-center">
+        <section className="relative py-34 text-center">
           <div className="container mx-auto px-6">
             <FadeIn>
               <div className="mb-16 transition-all duration-1000">
                 <div className="relative inline-block">
                   <div className="absolute inset-0 bg-gradient-to-r from-sky-400/20 to-blue-500/20 blur-2xl animate-pulse"></div>
-                  <h1 className="relative text-6xl md:text-8xl font-bold font-playfair mb-6">
-                    <span className="bg-gradient-to-r from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
-                      COCONUT
+                  <h1 className="relative text-[60px] md:text-8xl font-bold font-playfair mb-6">
+                    <span className="bg-gradient-to-r from-blue-500 via-sky-900 to-blue-900 bg-clip-text text-transparent animate-gradient">
+                      TechRanger
                     </span>
                     <br />
                     <span className="text-4xl md:text-6xl text-gray-700 font-light"></span>
                   </h1>
                 </div>
-                <p className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8">
-                  Computer Club Oriented Network, Utility & Technology
+                <p className="text-[22px] font-bold text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8">
+                  Tempat Lahirnya Para Penjaga Teknologi Masa Depan.
                 </p>
-                <div className="flex flex-wrap justify-center gap-4 text-sm text-sky-600 font-medium">
+                <div className="flex flex-wrap justify-center gap-4 text-sm text-[#03166D] font-medium">
                   <span className="px-4 py-2 bg-sky-100/80 rounded-full">Research & Development</span>
                   <span className="px-4 py-2 bg-blue-100/80 rounded-full">Innovation Hub</span>
                   <span className="px-4 py-2 bg-sky-100/80 rounded-full">Academic Collaboration</span>
@@ -63,7 +63,7 @@ export default function HomePage() {
                   </span>
                 </h2>
                 <p className="text-black text-center mt-6 px-6">
-                  Coconut memiliki 3 jurusan yang dapat kalian fokuskan saat
+                  TechRanger memiliki 3 jurusan yang dapat kalian fokuskan saat
                   kalian bergabung dengan kami
                 </p>
               </div>
@@ -121,20 +121,17 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* What is Coconut */}
+        {/* What is TechRanger */}
         <section className="relative ">
           <div className="container mx-auto px-6">
             {/* Bagian Judul & Deskripsi */}
             <FadeIn>
               <section className="text-center max-w-3xl mx-auto">
                 <h2 className="font-semibold text-4xl md:font-extrabold text-[#08314f] mb-2">
-                  Apa itu <span className="text-amber-500">COCONUT?</span>
+                  Apa itu <span className="text-amber-500">TechRanger?</span>
                 </h2>
                 <p className="text-black mt-6">
-                  COCONUT adalah sebuah study club yang berfokus pada bidang
-                  pengembangan teknologi, COCONUT telah berdiri sendiri dan juga
-                  telah diakui oleh negara karena telah sah dilindungi oleh
-                  undang-undang, tepatnya pada tahun 2022.
+                  TechRanger merupakan komunitas pengembangan teknologi yang bertujuan membangun talenta digital melalui pembelajaran terstruktur dalam bidang Frontend Development, Backend Engineering, dan Sistem. Komunitas ini menjadi tempat bagi siapa pun yang ingin meningkatkan kemampuan teknis, berkolaborasi, serta mengembangkan proyek inovatif secara bersama-sama.
                 </p>
               </section>
             </FadeIn>
@@ -147,7 +144,7 @@ export default function HomePage() {
                     <SlideUp delay={200}>
                     <div className="relative rounded-[15px] hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden w-full md:w-[500px] md:h-[320px] h-64 group">
                       <Image
-                      src="/coconut1.png"
+                      src="/gambar1.jpeg"
                       alt="Instructors"
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -159,7 +156,7 @@ export default function HomePage() {
                     <SlideUp delay={400}>
                     <div className="relative rounded-[15px] hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden w-full md:w-[500px] md:h-[320px] h-64 group">
                       <Image
-                      src="/coconut2.png"
+                      src="/gambar2.jpeg"
                       alt="Students"
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -186,16 +183,16 @@ export default function HomePage() {
                       <div className="flex items-center mb-2">
                         <h2 className="text-[#08314f] font-semibold text-[27px] md:mr-15 leading-tight">
                           Pembelajaran yang biasa Anda lakukan di <br /> kampus,
-                          <span className="text-[#44CDFF]">
+                          <span className="text-[#03166D]">
                             {" "}
-                            akan tetap terasa sama di COCONUT
+                            akan tetap terasa sama di TechRanger
                           </span>
                         </h2>
                       </div>
 
                       {/* Paragraf */}
                       <p className="text-black md:mt-12 leading-relaxed max-w-md">
-                        Study club Coconut berfokus pada bidang IT, Kami menyediakan lingkungan yang suportif dan memotivasi untuk mendorong inovasi, mengembangkan teknologi canggih, dan berkontribusi pada kemajuan Indonesia sebagai ekonomi berbasis pengetahuan.
+                        Study club TechRanger berfokus pada bidang IT, Kami menyediakan lingkungan yang suportif dan memotivasi untuk mendorong inovasi, mengembangkan teknologi canggih, dan berkontribusi pada kemajuan Indonesia sebagai ekonomi berbasis pengetahuan.
                       </p>
                     </div>
 

@@ -1,10 +1,10 @@
+// app/contact/page.js
 "use client";
 
-import Image from "next/image";
 import Footer from "../../components/Footer";
-
+import Navbar from "../../components/Navbar";
 import { FadeIn, SlideUp } from "../../components/Animations";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -19,7 +19,10 @@ export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [status, setStatus] = useState("");
 
-  // Handle input change
+  const formRef = useRef(null);
+  const mapContainerRef = useRef(null);
+  const [mapHeight, setMapHeight] = useState("320px");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -37,7 +40,6 @@ export default function Contact() {
     }));
   };
 
-  // Validasi form
   const validate = () => {
     const newErrors = {};
 
@@ -70,7 +72,6 @@ export default function Contact() {
     return newErrors;
   };
 
-  // Handle submit tanpa redirect
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validate();
@@ -124,40 +125,59 @@ export default function Contact() {
     }
   };
 
+  // Sinkronisasi tinggi peta dengan form
+  useEffect(() => {
+    const adjustMapHeight = () => {
+      if (formRef.current && window.innerWidth >= 1024) {
+        const formHeight = formRef.current.offsetHeight;
+        setMapHeight(`${formHeight}px`);
+      } else {
+        setMapHeight("320px");
+      }
+    };
+
+    adjustMapHeight();
+    window.addEventListener("resize", adjustMapHeight);
+
+    return () => {
+      window.removeEventListener("resize", adjustMapHeight);
+    };
+  }, []);
+
   return (
-    <div className=" bg-gradient-to-bl from-sky-50 via-white to-blue-50">
-     
-       <section className="relative py-24 text-center pb-40">
-        <div className="container mx-auto px-6 ">
-          <FadeIn>
-            <h1 className="text-5xl md:text-7xl font-bold font-playfair pt-20 py-3 bg-gradient-to-l from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
-              Contact Us
-            </h1>
-          </FadeIn>
-          <SlideUp delay={200}>
-            <p className="text-xl text-black max-w-2xl mx-auto leading-relaxed mb-10">
-             Kami terbuka untuk pertanyaan, kolaborasi, atau pendaftaran
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50">
+      <div className=" bg-gradient-to-bl from-sky-50 via-white to-blue-50">
+        <section className="relative py-24 text-center pb-40">
+          <div className="container mx-auto px-6 ">
+            <FadeIn>
+              <h1 className="text-5xl md:text-7xl font-bold font-playfair pt-20 py-3 bg-gradient-to-l from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
+                Contact Us
+              </h1>
+            </FadeIn>
+            <SlideUp delay={200}>
+              <p className="text-xl text-black max-w-2xl mx-auto leading-relaxed mb-10">
+                Kami terbuka untuk pertanyaan, kolaborasi, atau pendaftaran
                 anggota baru.
                 <br />
                 Jangan ragu untuk menghubungi kami!
                 <br />
                 pada kolom dibawah
-            </p>
-          </SlideUp>
-        </div>
-      </section>
+              </p>
+            </SlideUp>
+          </div>
+        </section>
+      </div>
 
-      <main className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50 ">
+      <main className="relative overflow-hidden">
         {/* Hero Section */}
         <section className="relative py-16 px-4 text-center">
           <div className="container mx-auto">
-           
             {/* Form & Map */}
-            <div className="flex flex-col lg:flex-row gap-8 md:gap-12 items-start max-w-6xl mx-auto mt-8">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
               {/* Form Kontak */}
-              <div className="w-full lg:flex-1">
+              <div ref={formRef} className="w-full lg:flex-1">
                 <SlideUp delay={300}>
-                  <div className="bg-gradient-to-br from-white/95 to-sky-50/95 p-6 md:p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/60 backdrop-blur-sm">
+                  <div className="bg-white/95 backdrop-blur-sm p-6 md:p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-sky-100">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Nama Depan & Belakang */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -170,11 +190,9 @@ export default function Contact() {
                             name="firstName"
                             value={formData.firstName}
                             onChange={handleChange}
-                            placeholder="John"
-                            className={`w-full p-3 border rounded-lg outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-sky-500 ${
-                              errors.firstName
-                                ? "border-red-500 bg-red-50"
-                                : "border-gray-300"
+                            placeholder="Naufal"
+                            className={`w-full p-3 border border-gray-300 rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
+                              errors.firstName ? "border-red-500 bg-red-50" : ""
                             }`}
                           />
                           {errors.firstName && (
@@ -193,11 +211,9 @@ export default function Contact() {
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleChange}
-                            placeholder="Doe"
-                            className={`w-full p-3 border rounded-lg outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-sky-500 ${
-                              errors.lastName
-                                ? "border-red-500 bg-red-50"
-                                : "border-gray-300"
+                            placeholder="Asila"
+                            className={`w-full p-3 border border-gray-300 rounded-lg text-black outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
+                              errors.lastName ? "border-red-500 bg-red-50" : ""
                             }`}
                           />
                           {errors.lastName && (
@@ -210,7 +226,7 @@ export default function Contact() {
 
                       {/* Email */}
                       <div>
-                        <label className="block text-sm font-medium text-black mb-2 text-left">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           Email
                         </label>
                         <input
@@ -218,11 +234,9 @@ export default function Contact() {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          placeholder="you@email.com"
-                          className={`w-full p-3 border rounded-lg outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-sky-500 ${
-                            errors.email
-                              ? "border-red-500 bg-red-50"
-                              : "border-gray-300"
+                          placeholder="nama@email.com"
+                          className={`w-full p-3 border border-gray-300 text-black rounded-lg outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
+                            errors.email ? "border-red-500 bg-red-50" : ""
                           }`}
                         />
                         {errors.email && (
@@ -234,23 +248,21 @@ export default function Contact() {
 
                       {/* Phone Number */}
                       <div>
-                        <label className="block text-sm font-medium text-black mb-2 text-left">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           Phone Number
                         </label>
                         <div className="relative">
-                          <select className="absolute top-0 left-0 w-24 h-full bg-gray-50 border border-gray-300 rounded-l-lg text-black text-sm focus:outline-none">
-                            <option value="+62">+62 (ID)</option>
-                          </select>
+                          <span className="absolute top-0 left-0 w-20 h-full flex items-center justify-center bg-gray-50 border border-gray-300 rounded-l-lg text-gray-600 text-sm">
+                            +62
+                          </span>
                           <input
                             type="tel"
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder="812-3456-7890"
-                            className={`w-full p-3 pl-28 border rounded-lg outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-sky-500 ${
-                              errors.phone
-                                ? "border-red-500 bg-red-50"
-                                : "border-gray-300"
+                            className={`w-full p-3 pl-20 border border-gray-300 text-black rounded-lg outline-none transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
+                              errors.phone ? "border-red-500 bg-red-50" : ""
                             }`}
                           />
                         </div>
@@ -263,7 +275,7 @@ export default function Contact() {
 
                       {/* Message */}
                       <div>
-                        <label className="block text-sm font-medium text-black mb-2 text-left">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           Message
                         </label>
                         <textarea
@@ -272,10 +284,8 @@ export default function Contact() {
                           onChange={handleChange}
                           placeholder="Tulis pesan kamu di sini..."
                           rows="5"
-                          className={`w-full p-3 border rounded-lg outline-none transition resize-none focus:ring-2 focus:ring-sky-400 focus:border-sky-500 ${
-                            errors.message
-                              ? "border-red-500 bg-red-50"
-                              : "border-gray-300"
+                          className={`w-full p-3 border border-gray-300 rounded-lg text-black outline-none resize-none transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
+                            errors.message ? "border-red-500 bg-red-50" : ""
                           }`}
                         ></textarea>
                         {errors.message && (
@@ -289,23 +299,21 @@ export default function Contact() {
                       <div className="text-center">
                         <button
                           type="submit"
-                          className="bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold px-8 py-3 rounded-full hover:from-sky-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                          className="bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold px-8 py-3 rounded-full hover:from-sky-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
                         >
                           📩 Kirim Pesan
                         </button>
                       </div>
                     </form>
 
-                    {/* Status Message */}
                     {status && !isSubmitted && (
-                      <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 text-sm rounded-lg">
+                      <div className="mt-4 p-3 bg-yellow-50 text-yellow-700 text-sm rounded-lg border border-yellow-200">
                         {status}
                       </div>
                     )}
 
-                    {/* Success Message */}
                     {isSubmitted && (
-                      <div className="mt-4 p-3 bg-green-100 text-green-800 text-sm rounded-lg">
+                      <div className="mt-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200">
                         Terima kasih! Pesan Anda telah dikirim ke tim COCONUT.
                       </div>
                     )}
@@ -314,22 +322,43 @@ export default function Contact() {
               </div>
 
               {/* Peta Lokasi */}
-              <div className="w-full lg:flex-1 mt-8 lg:mt-0">
+              <div
+                ref={mapContainerRef}
+                className="w-full lg:flex-1 mt-6 lg:mt-0"
+              >
                 <SlideUp delay={500}>
-                  <div className="relative group rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"></div>
-                    <Image
-                      src="/lokasi.png"
-                      alt="Lokasi Coconut Lab"
-                      width={500}
-                      height={600}
-                      className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700"
-                      priority
-                    />
-                    <div className="absolute bottom-6 left-6 text-white z-20">
-                      <h3 className="text-xl font-bold">Kantor Kami</h3>
-                      <p className="text-sm">Jl. Teknologi No. 1, Makassar</p>
+                  <div
+                    className="relative group rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 cursor-pointer"
+                    style={{ height: mapHeight }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+
+                    {/* 🔗 Ganti iframe ke lokasi baru: https://maps.app.goo.gl/8Bz3ow85zS8f7XKp9 */}
+                    <iframe
+                      src="https://maps.google.com/maps?q=-5.1835163,119.4422636&z=17&output=embed"
+                      style={{ border: 0 }}
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    ></iframe>
+
+                    <div className="absolute bottom-5 left-5 text-white z-20">
+                      <h3 className="text-lg md:text-xl font-bold">
+                        Sekretariat TechRanger
+                      </h3>
+                      <p className="text-sm opacity-90">
+                        Universitas Muhammadiyah Makassar
+                      </p>
                     </div>
+
+                    <a
+                      href="https://maps.app.goo.gl/8Bz3ow85zS8f7XKp9"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 z-30"
+                      aria-label="Buka lokasi di Google Maps"
+                    ></a>
                   </div>
                 </SlideUp>
               </div>

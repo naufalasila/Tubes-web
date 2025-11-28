@@ -5,7 +5,7 @@ import './globals.css';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
-import Navbar2 from '../components/navbar2';
+
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
   const isDashboard = pathname.startsWith('/dashboard');
 
   // Tentukan navbar mana yang akan ditampilkan (jika tidak di-hide)
-  const NavbarComponent = isLoggedIn ? Navbar : Navbar2;
+  const NavbarComponent = Navbar;
 
   return (
     <html lang="en">

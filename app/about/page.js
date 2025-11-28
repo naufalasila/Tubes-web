@@ -21,15 +21,15 @@ export default function About() {
 
   const timelineEvents = [
     {
-      year: "2008",
+      year: "2024",
       month: "April",
-      title: "Berdirinya COCONUT",
+      title: "Berdirinya TechRanger",
       description:
-        "Didirikan di STMIK Profesional sebagai klub komputer yang berfokus pada penelitian teknologi",
+        "Didirikan di Unismuh Makassar sebagai klub komputer yang berfokus pada penelitian teknologi",
       icon: "/kalender.png",
     },
     {
-      year: "2015",
+      year: "2025",
       month: "Januari",
       title: "Ekspansi Multi-Universitas",
       description:
@@ -37,11 +37,11 @@ export default function About() {
       icon: "/vector.png",
     },
     {
-      year: "2022",
+      year: "2025",
       month: "Maret",
       title: "Legalitas Resmi",
       description:
-        "Terdaftar di Kemenkumham RI dengan nomor AHU-0012037.AH.01.07.TAHUN 2022",
+        "Telah Diakui oleh Universitas Muhammadiyah Makassar sebagai Studi Club resmi",
       icon: "/vector2.png",
     },
   ];
@@ -59,7 +59,7 @@ export default function About() {
         <div className="container mx-auto px-6 ">
           <FadeIn>
             <h1 className="text-5xl md:text-7xl font-bold font-playfair pt-20 py-3 bg-gradient-to-l from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
-              Tentang Coconut
+              Tentang TechRanger
             </h1>
           </FadeIn>
           <SlideUp delay={200}>
@@ -71,7 +71,7 @@ export default function About() {
       </section>
 
       <main className="relative overflow-hidden  bg-gradient-to-br from-sky-50 via-white to-blue-50">
-        {/* ✅ Bagian: Tentang COCONUT */}
+        {/* ✅ Bagian: Tentang TechRanger */}
 
         <section className="relative py-24">
           <div className="container mx-auto px-6 max-w-6xl">
@@ -83,8 +83,8 @@ export default function About() {
                     Sejarah Singkat
                   </h3>
                   <p className="text-black leading-relaxed">
-                    COCONUT (Computer Club Oriented Network, Utility &
-                    Technology) berdiri pada tahun 2008 di STMIK Profesional
+                    TechRanger (Computer Club Oriented Network, Utility &
+                    Technology) berdiri pada tahun 2008 di Universitas Muhammadiyah
                     Makassar. Awalnya sebagai klub komputer kampus, kini
                     berkembang menjadi komunitas teknologi lintas universitas
                     yang aktif dalam penelitian, pengembangan, dan kolaborasi
@@ -101,7 +101,7 @@ export default function About() {
                   </h3>
                   <p className="text-black leading-relaxed">
                     Dengan fokus yang kuat pada riset dan pengembangan teknologi
-                    informasi, COCONUT berkomitmen membina dan memberdayakan
+                    informasi, TechRanger berkomitmen membina dan memberdayakan
                     generasi muda untuk menjadi talenta unggul di bidang
                     teknologi. Melalui program pelatihan intensif, webinar
                     inspiratif, dan proyek kolaboratif berskala nasional dan
@@ -202,7 +202,7 @@ export default function About() {
               {/* Tombol Advanced Reference */}
               <div className="text-center mt-2">
                 <Link
-                  href="https://coconut.or.id/"
+                  href="https://TechRanger.or.id/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -276,16 +276,16 @@ export default function About() {
                 </h2>
                 <p className="text-lg text-black max-w-3xl mx-auto">
                   Pencapaian kuantitatif dan strategis yang membuktikan
-                  kontribusi COCONUT terhadap teknologi dan pendidikan
+                  kontribusi TechRanger terhadap teknologi dan pendidikan
                 </p>
               </div>
             </FadeIn>
 
             {/* Baris 1: 5 Kartu */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mb-12">
+            <div className="grid grid-cols-1 text-black sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mb-12">
               {[
                 {
-                  number: "16+",
+                  number: "1+",
                   label: "Tahun Pengalaman",
                   desc: "Berdiri sejak 2008, konsisten mengembangkan teknologi",
                 },

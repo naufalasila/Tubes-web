@@ -7,7 +7,7 @@ import { FaYoutube, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa';
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700  text-white py-8 mt-12">
+    <footer className="bg-gradient-to-r from-[#03166D] to-sky-600 hover:from-blue-700 hover:to-sky-700  text-white py-8 mt-12">
       <div className="container mx-auto px-6">
         
         {/* Media Sosial */}
@@ -15,7 +15,7 @@ export default function Footer() {
           
           {/* YouTube */}
           <Link
-            href="https://youtube.com/@coconutcomputerclub3982"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center group"
@@ -28,7 +28,7 @@ export default function Footer() {
 
           {/* LinkedIn */}
           <Link
-            href="https://www.linkedin.com/company/coconut-computer-club/"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center group"
@@ -41,7 +41,7 @@ export default function Footer() {
 
           {/* Instagram */}
           <Link
-            href="https://www.instagram.com/coconutdotorg?igsh=MWw1a3MzcnNzMWFw"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center group"
@@ -54,7 +54,7 @@ export default function Footer() {
 
           {/* Facebook */}
           <Link
-            href="https://web.facebook.com/coconutcomputer.masing-masing"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center group"
@@ -68,15 +68,15 @@ export default function Footer() {
 
         {/* Kalimat copyright */}
         <p className="text-sky-200 text-sm text-center mt-10">
-          © 2025 Coconut Lab • Dibuat dengan{' '}
+          © 2025 TechRanger Lab • Dibuat dengan{' '}
           <span className="text-red-300">❤</span> oleh{' '}
           <Link
-            href="https://github.com/hacklab-id"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white underline hover:text-sky-100 transition duration-200"
           >
-            hacklab
+            TechLab
           </Link>
         </p>
       </div>
