@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { apiClient } from "../../lib/apiClient";
 import { FadeIn, SlideUp } from "../../components/Animations";
-
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -27,10 +26,8 @@ export default function Login() {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.username.trim())
-      newErrors.username = "Username wajib diisi";
-    if (!formData.password)
-      newErrors.password = "Password wajib diisi";
+    if (!formData.username.trim()) newErrors.username = "Username wajib diisi";
+    if (!formData.password) newErrors.password = "Password wajib diisi";
 
     return newErrors;
   };
@@ -50,28 +47,25 @@ export default function Login() {
     setStatus("Memproses...");
 
     try {
-      // 👇 INI TEMPAT UNTUK INTEGRASI DENGAN BACKEND GOlang NANTI!
-      // Contoh: POST ke /api/auth/login
-      const res = await fetch("/api/auth/login", {
+      const data = await apiClient("/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(formData),
       });
 
-      if (res.ok) {
-        setStatus("Login berhasil!");
-        // Redirect ke dashboard admin
-        setTimeout(() => {
-          window.location.href = "/admin"; // atau router.push('/admin') jika pakai Next.js App Router
-        }, 1500);
-      } else {
-        const data = await res.json();
-        setStatus(data.message || "Login gagal. Periksa username/password.");
-      }
+      // Backend kamu mengembalikan:
+      // { success, status, message, token, user }
+      const { token, user } = data;
+
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      setStatus("Login berhasil!");
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 1500);
     } catch (error) {
-      setStatus("Terjadi kesalahan. Silakan coba lagi.");
+      console.error("Login error:", error);
+      setStatus(error.message || "Login gagal");
     } finally {
       setLoading(false);
     }
@@ -81,13 +75,12 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 flex items-center justify-center p-4">
       {/* Login Card */}
       <SlideUp delay={200}>
-        <div className="w-150 max-w-md bg-white/95 backdrop-blur-sm p-8 rounded-3xl shadow-xl border  border-sky-100">
+        <div className="w-full max-w-md bg-white/95 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-sky-100">
           {/* Logo */}
           <div className="text-center mb-6">
             <div className="inline-block">
-              {/* 🔥 TEMPAT LOGO — GANTI DENGAN LOGO ASLI MU NANTI */}
               <Image
-                src="/logo-new.png" // Ganti dengan path logo kamu
+                src="/logo-new.png"
                 alt="Coconut Computer Club"
                 width={150}
                 height={60}
@@ -148,8 +141,13 @@ export default function Login() {
                   type="button"
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   onClick={() => {
-                    const input = document.querySelector('input[name="password"]');
-                    input.type = input.type === "password" ? "text" : "password";
+                    const input = document.querySelector(
+                      'input[name="password"]'
+                    );
+                    if (input) {
+                      input.type =
+                        input.type === "password" ? "text" : "password";
+                    }
                   }}
                 >
                   <svg
@@ -202,9 +200,24 @@ export default function Login() {
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Memproses...
                   </span>
@@ -214,12 +227,8 @@ export default function Login() {
               </button>
             </div>
           </form>
-
-          
         </div>
       </SlideUp>
-
-     
     </div>
   );
 }

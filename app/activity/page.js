@@ -8,22 +8,22 @@ import Footer from "../../components/Footer";
 
 export default function Registration() {
   const [formData, setFormData] = useState({
-    fullName: "",
-    nickname: "",
-    birthPlace: "",
-    birthDate: "",
-    gender: "",
+    nama_lengkap: "",
+    nama_panggilan: "",
+    tempat_lahir: "",
+    tanggal_lahir: "",
+    jenis_kelamin: "",
     email: "",
-    whatsapp: "",
-    telegram: "",
-    address: "",
-    residence: "",
-    campusOrigin: "",
-    major: "",
+    no_wa: "",
+    username_telegram: "",
+    alamat_sekarang: "",
+    domisili: "",
+    asal_kampus: "",
+    prodi: "",
     semester: "",
-    photo: null,
-    reason: "",
-    source: "",
+    foto: null,
+    alasan_masuk: "",
+    pengetahuan_coconut: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -47,70 +47,52 @@ export default function Registration() {
     }
   };
 
-  const handleGenderChange = (value) => {
-    setFormData((prev) => ({ ...prev, gender: value }));
+  const handleJenisKelaminChange = (value) => {
+    setFormData((prev) => ({ ...prev, jenis_kelamin: value }));
   };
 
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.fullName.trim())
-      newErrors.fullName = "Nama lengkap wajib diisi";
-    if (!formData.nickname.trim())
-      newErrors.nickname = "Nama panggilan wajib diisi";
-    if (!formData.birthPlace.trim())
-      newErrors.birthPlace = "Tempat lahir wajib diisi";
-    if (!formData.birthDate)
-      newErrors.birthDate = "Tanggal lahir wajib diisi";
-    if (!formData.gender)
-      newErrors.gender = "Jenis kelamin wajib dipilih";
-    if (!formData.email) {
-      newErrors.email = "Email wajib diisi";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Format email tidak valid";
-    }
-    if (!formData.whatsapp)
-      newErrors.whatsapp = "Nomor WhatsApp wajib diisi";
-    if (!formData.telegram)
-      newErrors.telegram = "Username Telegram wajib diisi";
-    if (!formData.address.trim())
-      newErrors.address = "Alamat wajib diisi";
-    if (!formData.residence)
-      newErrors.residence = "Pilih tempat tinggal";
-    if (!formData.campusOrigin.trim())
-      newErrors.campusOrigin = "Asal kampus wajib diisi";
-    if (!formData.major.trim())
-      newErrors.major = "Jurusan wajib diisi";
-    if (!formData.semester)
-      newErrors.semester = "Pilih semester";
+    if (!formData.nama_lengkap.trim())
+      newErrors.nama_lengkap = "Nama lengkap wajib diisi";
+    if (!formData.no_wa) newErrors.no_wa = "Nomor WhatsApp wajib diisi";
+    if (!formData.username_telegram)
+      newErrors.username_telegram = "Username Telegram wajib diisi";
+    if (!formData.alamat_sekarang.trim())
+      newErrors.alamat_sekarang = "Alamat wajib diisi";
+    if (!formData.domisili) newErrors.domisili = "Pilih tempat tinggal";
+    if (!formData.asal_kampus.trim())
+      newErrors.asal_kampus = "Asal kampus wajib diisi";
+    if (!formData.prodi.trim()) newErrors.prodi = "Jurusan wajib diisi";
+    if (!formData.semester) newErrors.semester = "Pilih semester";
+    if (!formData.alasan_masuk.trim())
+      newErrors.alasan_masuk = "Alasan bergabung wajib diisi";
+    if (!formData.pengetahuan_coconut)
+      newErrors.pengetahuan_coconut = "Pilih sumber informasi";
 
-    // Validasi foto (opsional tapi disarankan)
-    if (!formData.photo) {
-      // newErrors.photo = "Foto wajib diunggah"; // bisa di-comment jika optional
+    // Validasi foto — WAJIB karena backend require
+    if (!formData.foto) {
+      newErrors.foto = "Foto wajib diunggah";
     } else {
       const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
       const maxSize = 2 * 1024 * 1024; // 2MB
 
-      if (!allowedTypes.includes(formData.photo.type)) {
-        newErrors.photo = "Hanya file JPG, JPEG, PNG yang diperbolehkan";
+      if (!allowedTypes.includes(formData.foto.type)) {
+        newErrors.foto = "Hanya file JPG, JPEG, PNG yang diperbolehkan";
       }
-      if (formData.photo.size > maxSize) {
-        newErrors.photo = "Ukuran file maksimal 2MB";
+      if (formData.foto.size > maxSize) {
+        newErrors.foto = "Ukuran file maksimal 2MB";
       }
     }
-
-    if (!formData.reason.trim())
-      newErrors.reason = "Alasan bergabung wajib diisi";
-    if (!formData.source)
-      newErrors.source = "Pilih sumber informasi";
 
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validate();
 
+    const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setIsSubmitted(false);
@@ -121,56 +103,87 @@ export default function Registration() {
     setStatus("Mengirim...");
 
     try {
-      // 👇 INI TEMPAT UNTUK INTEGRASI DENGAN BACKEND GOlang NANTI!
-      // Contoh: POST ke /api/register
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          // Jika ingin upload file, gunakan FormData (lihat catatan di bawah)
-        }),
-      });
+      const form = new FormData();
+
+      // Kirim field sesuai nama yang diharapkan backend
+      form.append("nama_lengkap", formData.nama_lengkap);
+      form.append("asal_kampus", formData.asal_kampus);
+      form.append("prodi", formData.prodi);
+      form.append("semester", formData.semester);
+      form.append("no_wa", formData.no_wa);
+      form.append("domisili", formData.domisili);
+      form.append("alamat_sekarang", formData.alamat_sekarang);
+      form.append("alasan_masuk", formData.alasan_masuk);
+      form.append("pengetahuan_coconut", formData.pengetahuan_coconut);
+
+      // Field opsional (backend tidak pakai, tapi kirim saja jika ada)
+      if (formData.nama_panggilan)
+        form.append("nama_panggilan", formData.nama_panggilan);
+      if (formData.tempat_lahir)
+        form.append("tempat_lahir", formData.tempat_lahir);
+      if (formData.tanggal_lahir)
+        form.append("tanggal_lahir", formData.tanggal_lahir);
+      if (formData.jenis_kelamin)
+        form.append("jenis_kelamin", formData.jenis_kelamin);
+      if (formData.email) form.append("email", formData.email);
+      if (formData.username_telegram)
+        form.append("username_telegram", formData.username_telegram);
+
+      // Foto wajib
+      if (formData.foto) {
+        form.append("foto", formData.foto);
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pendaftar/create`,
+        {
+          method: "POST",
+          body: form,
+          // ⚠️ JANGAN set Content-Type — biarkan browser set otomatis dengan boundary
+        }
+      );
 
       if (res.ok) {
         setIsSubmitted(true);
         setStatus("Pendaftaran berhasil!");
+
         // Reset form
         setFormData({
-          fullName: "",
-          nickname: "",
-          birthPlace: "",
-          birthDate: "",
-          gender: "",
+          nama_lengkap: "",
+          nama_panggilan: "",
+          tempat_lahir: "",
+          tanggal_lahir: "",
+          jenis_kelamin: "",
           email: "",
-          whatsapp: "",
-          telegram: "",
-          address: "",
-          residence: "",
-          campusOrigin: "",
-          major: "",
+          no_wa: "",
+          username_telegram: "",
+          alamat_sekarang: "",
+          domisili: "",
+          asal_kampus: "",
+          prodi: "",
           semester: "",
-          photo: null,
-          reason: "",
-          source: "",
+          foto: null,
+          alasan_masuk: "",
+          pengetahuan_coconut: "",
         });
+
         if (fileInputRef.current) fileInputRef.current.value = "";
       } else {
-        setStatus("Gagal mengirim data. Silakan coba lagi.");
+        const errorText = await res.text();
+        setStatus(`Gagal: ${errorText || "Silakan coba lagi."}`);
       }
     } catch (error) {
-      setStatus("Terjadi kesalahan. Silakan coba lagi.");
+      console.error("Submission error:", error);
+      setStatus("Terjadi kesalahan jaringan. Silakan coba lagi.");
     }
   };
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-sky-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50">
       {/* Header Section */}
-      <div className=" bg-gradient-to-bl from-sky-50 via-white to-blue-50">
+      <div className="bg-gradient-to-bl from-sky-50 via-white to-blue-50">
         <section className="relative py-24 text-center pb-40">
-          <div className="container mx-auto px-6 ">
+          <div className="container mx-auto px-6">
             <FadeIn>
               <h1 className="text-5xl md:text-7xl font-bold font-playfair pt-20 py-3 bg-gradient-to-l from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
                 Formulir
@@ -178,7 +191,8 @@ export default function Registration() {
             </FadeIn>
             <SlideUp delay={200}>
               <p className="text-xl text-black max-w-2xl mx-auto leading-relaxed mb-10">
-               Silahkan isi Formulir pendaftaran dibawah dengan data asli kalian
+                Silahkan isi Formulir pendaftaran dibawah dengan data asli
+                kalian
                 <br />
                 sebagai langkah awal kalian untuk bergabung
                 <br />
@@ -198,7 +212,8 @@ export default function Registration() {
                 Formulir Pendaftaran
               </h2>
               <p className="text-gray-600 text-center mb-8">
-                Isi informasi dengan benar untuk bergabung dengan komunitas kami.
+                Isi informasi dengan benar untuk bergabung dengan komunitas
+                kami.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -210,16 +225,18 @@ export default function Registration() {
                     </label>
                     <input
                       type="text"
-                      name="fullName"
-                      value={formData.fullName}
+                      name="nama_lengkap"
+                      value={formData.nama_lengkap}
                       onChange={handleChange}
                       placeholder="Contoh: Naufal Asila"
-                      className={`w-full p-3 border rounded-lg outline-none transition text-black  focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.fullName ? "border-red-500 bg-red-50" : ""
+                      className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
+                        errors.nama_lengkap ? "border-red-500 bg-red-50" : ""
                       }`}
                     />
-                    {errors.fullName && (
-                      <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>
+                    {errors.nama_lengkap && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.nama_lengkap}
+                      </p>
                     )}
                   </div>
 
@@ -229,17 +246,12 @@ export default function Registration() {
                     </label>
                     <input
                       type="text"
-                      name="nickname"
-                      value={formData.nickname}
+                      name="nama_panggilan"
+                      value={formData.nama_panggilan}
                       onChange={handleChange}
                       placeholder="Contoh: Naufal"
-                      className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.nickname ? "border-red-500 bg-red-50" : ""
-                      }`}
+                      className="w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                     />
-                    {errors.nickname && (
-                      <p className="text-red-500 text-xs mt-1">{errors.nickname}</p>
-                    )}
                   </div>
                 </div>
 
@@ -251,17 +263,12 @@ export default function Registration() {
                     </label>
                     <input
                       type="text"
-                      name="birthPlace"
-                      value={formData.birthPlace}
+                      name="tempat_lahir"
+                      value={formData.tempat_lahir}
                       onChange={handleChange}
                       placeholder="Contoh: Makassar"
-                      className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.birthPlace ? "border-red-500 bg-red-50" : ""
-                      }`}
+                      className="w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                     />
-                    {errors.birthPlace && (
-                      <p className="text-red-500 text-xs mt-1">{errors.birthPlace}</p>
-                    )}
                   </div>
 
                   <div>
@@ -270,17 +277,14 @@ export default function Registration() {
                     </label>
                     <input
                       type="date"
-                      name="birthDate"
-                      value={formData.birthDate}
+                      name="tanggal_lahir"
+                      value={formData.tanggal_lahir}
                       onChange={handleChange}
-                      className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.birthDate ? "border-red-500 bg-red-50" : ""
-                      }`}
+                      className="w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                     />
-                    {errors.birthDate && (
-                      <p className="text-red-500 text-xs mt-1">{errors.birthDate}</p>
-                    )}
-                    <p className="text-xs text-gray-500 mt-1">Format: YYYY-MM-DD</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Format: YYYY-MM-DD
+                    </p>
                   </div>
                 </div>
 
@@ -293,10 +297,10 @@ export default function Registration() {
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
-                        name="gender"
+                        name="jenis_kelamin"
                         value="Pria"
-                        checked={formData.gender === "Pria"}
-                        onChange={() => handleGenderChange("Pria")}
+                        checked={formData.jenis_kelamin === "Pria"}
+                        onChange={() => handleJenisKelaminChange("Pria")}
                         className="form-radio h-5 w-5 text-sky-600"
                       />
                       <span className="ml-2 text-gray-700">Pria</span>
@@ -304,18 +308,15 @@ export default function Registration() {
                     <label className="inline-flex items-center">
                       <input
                         type="radio"
-                        name="gender"
+                        name="jenis_kelamin"
                         value="Wanita"
-                        checked={formData.gender === "Wanita"}
-                        onChange={() => handleGenderChange("Wanita")}
+                        checked={formData.jenis_kelamin === "Wanita"}
+                        onChange={() => handleJenisKelaminChange("Wanita")}
                         className="form-radio h-5 w-5 text-sky-600"
                       />
                       <span className="ml-2 text-gray-700">Wanita</span>
                     </label>
                   </div>
-                  {errors.gender && (
-                    <p className="text-red-500 text-xs">{errors.gender}</p>
-                  )}
                 </div>
 
                 {/* Email & WhatsApp */}
@@ -330,13 +331,8 @@ export default function Registration() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="nama@email.com"
-                      className={`w-full p-3 border rounded-lg outline-none text-black transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.email ? "border-red-500 bg-red-50" : ""
-                      }`}
+                      className="w-full p-3 border rounded-lg outline-none text-black transition focus:ring-2 focus:ring-sky-400 focus:border-transparent"
                     />
-                    {errors.email && (
-                      <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                    )}
                   </div>
 
                   <div>
@@ -345,16 +341,18 @@ export default function Registration() {
                     </label>
                     <input
                       type="tel"
-                      name="whatsapp"
-                      value={formData.whatsapp}
+                      name="no_wa"
+                      value={formData.no_wa}
                       onChange={handleChange}
                       placeholder="0812-3456-7890"
                       className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.whatsapp ? "border-red-500 bg-red-50" : ""
+                        errors.no_wa ? "border-red-500 bg-red-50" : ""
                       }`}
                     />
-                    {errors.whatsapp && (
-                      <p className="text-red-500 text-xs mt-1">{errors.whatsapp}</p>
+                    {errors.no_wa && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.no_wa}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -366,16 +364,18 @@ export default function Registration() {
                   </label>
                   <input
                     type="text"
-                    name="telegram"
-                    value={formData.telegram}
+                    name="username_telegram"
+                    value={formData.username_telegram}
                     onChange={handleChange}
                     placeholder="@username"
                     className={`w-full p-3 border rounded-lg outline-none text-black transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                      errors.telegram ? "border-red-500 bg-red-50" : ""
+                      errors.username_telegram ? "border-red-500 bg-red-50" : ""
                     }`}
                   />
-                  {errors.telegram && (
-                    <p className="text-red-500 text-xs mt-1">{errors.telegram}</p>
+                  {errors.username_telegram && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.username_telegram}
+                    </p>
                   )}
                 </div>
 
@@ -387,16 +387,18 @@ export default function Registration() {
                     </label>
                     <input
                       type="text"
-                      name="address"
-                      value={formData.address}
+                      name="alamat_sekarang"
+                      value={formData.alamat_sekarang}
                       onChange={handleChange}
                       placeholder="Jl. Contoh No. 123"
                       className={`w-full p-3 border rounded-lg outline-none text-black transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.address ? "border-red-500 bg-red-50" : ""
+                        errors.alamat_sekarang ? "border-red-500 bg-red-50" : ""
                       }`}
                     />
-                    {errors.address && (
-                      <p className="text-red-500 text-xs mt-1">{errors.address}</p>
+                    {errors.alamat_sekarang && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.alamat_sekarang}
+                      </p>
                     )}
                   </div>
 
@@ -405,11 +407,11 @@ export default function Registration() {
                       Pilih Tempat Tinggal
                     </label>
                     <select
-                      name="residence"
-                      value={formData.residence}
+                      name="domisili"
+                      value={formData.domisili}
                       onChange={handleChange}
                       className={`w-full p-3 border rounded-lg outline-none text-black transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.residence ? "border-red-500 bg-red-50" : ""
+                        errors.domisili ? "border-red-500 bg-red-50" : ""
                       }`}
                     >
                       <option value="">-- Pilih --</option>
@@ -419,8 +421,10 @@ export default function Registration() {
                       <option value="Takalar">Takalar</option>
                       <option value="Lainnya">Lainnya</option>
                     </select>
-                    {errors.residence && (
-                      <p className="text-red-500 text-xs mt-1">{errors.residence}</p>
+                    {errors.domisili && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.domisili}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -433,16 +437,18 @@ export default function Registration() {
                     </label>
                     <input
                       type="text"
-                      name="campusOrigin"
-                      value={formData.campusOrigin}
+                      name="asal_kampus"
+                      value={formData.asal_kampus}
                       onChange={handleChange}
                       placeholder="Contoh: Universitas Muhammadiyah Makassar"
                       className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.campusOrigin ? "border-red-500 bg-red-50" : ""
+                        errors.asal_kampus ? "border-red-500 bg-red-50" : ""
                       }`}
                     />
-                    {errors.campusOrigin && (
-                      <p className="text-red-500 text-xs mt-1">{errors.campusOrigin}</p>
+                    {errors.asal_kampus && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.asal_kampus}
+                      </p>
                     )}
                   </div>
 
@@ -452,16 +458,18 @@ export default function Registration() {
                     </label>
                     <input
                       type="text"
-                      name="major"
-                      value={formData.major}
+                      name="prodi"
+                      value={formData.prodi}
                       onChange={handleChange}
                       placeholder="Contoh: Teknik Informatika"
                       className={`w-full p-3 border rounded-lg outline-none transition text-black focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                        errors.major ? "border-red-500 bg-red-50" : ""
+                        errors.prodi ? "border-red-500 bg-red-50" : ""
                       }`}
                     />
-                    {errors.major && (
-                      <p className="text-red-500 text-xs mt-1">{errors.major}</p>
+                    {errors.prodi && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.prodi}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -491,7 +499,9 @@ export default function Registration() {
                     <option value="9+">Lebih dari 8</option>
                   </select>
                   {errors.semester && (
-                    <p className="text-red-500 text-xs mt-1">{errors.semester}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.semester}
+                    </p>
                   )}
                 </div>
 
@@ -504,21 +514,21 @@ export default function Registration() {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      name="photo"
+                      name="foto"
                       accept=".jpg,.jpeg,.png"
                       onChange={handleChange}
                       className={`w-full p-3 border border-gray-300 text-black rounded-lg cursor-pointer ${
-                        errors.photo ? "border-red-500 bg-red-50" : ""
+                        errors.foto ? "border-red-500 bg-red-50" : ""
                       }`}
                     />
-                    {formData.photo && (
+                    {formData.foto && (
                       <p className="text-sm text-gray-600 mt-1">
-                        File terpilih: {formData.photo.name}
+                        File terpilih: {formData.foto.name}
                       </p>
                     )}
                   </div>
-                  {errors.photo && (
-                    <p className="text-red-500 text-xs mt-1">{errors.photo}</p>
+                  {errors.foto && (
+                    <p className="text-red-500 text-xs mt-1">{errors.foto}</p>
                   )}
                 </div>
 
@@ -528,31 +538,35 @@ export default function Registration() {
                     Alasan Bergabung
                   </label>
                   <textarea
-                    name="reason"
-                    value={formData.reason}
+                    name="alasan_masuk"
+                    value={formData.alasan_masuk}
                     onChange={handleChange}
-                    placeholder="Tulis alasan Anda ingin bergabung dengan COCONUT Computer Club..."
+                    placeholder="Tulis alasan Anda ingin bergabung dengan TechRanger..."
                     rows="4"
                     className={`w-full p-3 border rounded-lg outline-none text-black resize-none transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                      errors.reason ? "border-red-500 bg-red-50" : ""
+                      errors.alasan_masuk ? "border-red-500 bg-red-50" : ""
                     }`}
                   ></textarea>
-                  {errors.reason && (
-                    <p className="text-red-500 text-xs mt-1">{errors.reason}</p>
+                  {errors.alasan_masuk && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.alasan_masuk}
+                    </p>
                   )}
                 </div>
 
                 {/* Sumber Informasi */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Dari mana Anda mengetahui tentang Coconut?
+                    Dari mana Anda mengetahui tentang TechRanger?
                   </label>
                   <select
-                    name="source"
-                    value={formData.source}
+                    name="pengetahuan_coconut"
+                    value={formData.pengetahuan_coconut}
                     onChange={handleChange}
                     className={`w-full p-3 border rounded-lg outline-none text-black transition focus:ring-2 focus:ring-sky-400 focus:border-transparent ${
-                      errors.source ? "border-red-500 bg-red-50" : ""
+                      errors.pengetahuan_coconut
+                        ? "border-red-500 bg-red-50"
+                        : ""
                     }`}
                   >
                     <option value="">-- Pilih salah satu --</option>
@@ -562,8 +576,10 @@ export default function Registration() {
                     <option value="Website">Website</option>
                     <option value="Lainnya">Lainnya</option>
                   </select>
-                  {errors.source && (
-                    <p className="text-red-500 text-xs mt-1">{errors.source}</p>
+                  {errors.pengetahuan_coconut && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.pengetahuan_coconut}
+                    </p>
                   )}
                 </div>
 
@@ -573,14 +589,31 @@ export default function Registration() {
                     type="submit"
                     disabled={status === "Mengirim..."}
                     className={`bg-gradient-to-r from-blue-600 to-sky-600 text-white font-semibold px-8 py-3 rounded-full hover:from-blue-700 hover:to-sky-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
-                      status === "Mengirim..." ? "opacity-75 cursor-not-allowed" : ""
+                      status === "Mengirim..."
+                        ? "opacity-75 cursor-not-allowed"
+                        : ""
                     }`}
                   >
                     {status === "Mengirim..." ? (
                       <span className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <svg
+                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
                         </svg>
                         Mengirim...
                       </span>
@@ -599,7 +632,9 @@ export default function Registration() {
 
                 {isSubmitted && (
                   <div className="mt-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200">
-                    Terima kasih! Pendaftaran Anda telah berhasil. Tim COCONUT akan menghubungi Anda melalui email atau WhatsApp.
+                    Terima kasih! Pendaftaran Anda telah berhasil. Tim
+                    TechRanger akan menghubungi Anda melalui email atau
+                    WhatsApp.
                   </div>
                 )}
               </form>
