@@ -179,13 +179,13 @@ export default function Registration() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50">
+    <div className="min-h-screen bg-linear-to-br from-sky-50 via-white to-blue-50">
       {/* Header Section */}
-      <div className="bg-gradient-to-bl from-sky-50 via-white to-blue-50">
+      <div className="bg-linear-to-bl from-sky-50 via-white to-blue-50">
         <section className="relative py-24 text-center pb-40">
           <div className="container mx-auto px-6">
             <FadeIn>
-              <h1 className="text-5xl md:text-7xl font-bold font-playfair pt-20 py-3 bg-gradient-to-l from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
+              <h1 className="text-5xl md:text-7xl font-bold font-playfair pt-20 py-3 bg-linear-to-l from-blue-800 via-sky-600 to-blue-900 bg-clip-text text-transparent animate-gradient">
                 Formulir
               </h1>
             </FadeIn>
@@ -588,7 +588,7 @@ export default function Registration() {
                   <button
                     type="submit"
                     disabled={status === "Mengirim..."}
-                    className={`bg-gradient-to-r from-blue-600 to-sky-600 text-white font-semibold px-8 py-3 rounded-full hover:from-blue-700 hover:to-sky-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
+                    className={`bg-linear-to-r from-blue-600 to-sky-600 text-white font-semibold px-8 py-3 rounded-full hover:from-blue-700 hover:to-sky-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
                       status === "Mengirim..."
                         ? "opacity-75 cursor-not-allowed"
                         : ""

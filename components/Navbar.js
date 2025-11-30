@@ -70,7 +70,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative inline-block px-5 py-2 text-[22px] font-medium rounded-lg transition-all duration-300 transform hover:scale-110 hover:shadow-lg ${
+                className={`relative inline-block px-5 py-2 text-[18px] font-medium rounded-lg transition-all duration-300 transform hover:scale-110 hover:shadow-lg ${
                   isActive ? 'text-[#0051FF] font-semibold' : 'text-gray-800 group'
                 }`}
               >
