@@ -1,7 +1,7 @@
-# COCOPEN - Pendaftaran Calon Anggota Coconut Computer Club
+# TechRanger - Pendaftaran Calon Anggota TechRanger Computer Club
 
 ## Gambaran Umum
-COCOPEN adalah aplikasi web yang dirancang untuk memfasilitasi pendaftaran calon anggota Coconut Computer Club. Aplikasi ini menyederhanakan proses pendaftaran anggota baru dengan antarmuka yang ramah pengguna untuk sign-up dan autentikasi.
+TechRanger adalah aplikasi web yang dirancang untuk memfasilitasi pendaftaran calon anggota TechRanger Computer Club. Aplikasi ini menyederhanakan proses pendaftaran anggota baru dengan antarmuka yang ramah pengguna untuk sign-up dan autentikasi.
 
 ## Fitur
 - **Sign-in/Sign-up**: Sistem autentikasi yang aman.
